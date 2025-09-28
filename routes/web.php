@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FasilitasController;
 use App\Http\Controllers\MahasiswaController;
 
 Route::get('/', function () {
@@ -24,3 +25,6 @@ Route::get('/mahasiswa', function () {
 })->name('mahasiswa.show');
 
 Route::get('/mahasiswa/{param1}', [MahasiswaController::class, 'show']);
+
+Route::get('/fasilitas', [FasilitasController::class, 'index']);
+
