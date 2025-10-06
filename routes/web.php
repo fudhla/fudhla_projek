@@ -2,11 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FasilitasController;
 use App\Http\Controllers\MahasiswaController;
 
 Route::get('/', function () {
-    return view('home');
+    return view('welcome');
 });
 
 Route::get('/sid', function () {
@@ -35,3 +37,8 @@ Route::post('/auth/login', [AuthController::class, 'login'])->name('login.proces
 Route::get('/dashboard', function () {
     return view('dashboard');
 });
+
+Route::get('/home',[HomeController::class,'index']);
+
+Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
