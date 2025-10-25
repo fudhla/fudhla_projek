@@ -2,14 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-<<<<<<< HEAD
-=======
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\HomeController;
->>>>>>> 683175343b02d72a3ddd7b0c668d28601b3c5deb
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FasilitasController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\FasilitasUmumController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,12 +22,12 @@ Route::get('/nama/{param1}', function ($param1) {
     return 'Nama saya adalah: '.$param1;
 });
 
-Route::get('/nama/{param1?}', function ($param1= '') {
-    return 'Nama saya adalah: '.$param1; //required
+Route::get('/nama/{param1?}', function ($param1 = '') {
+    return 'Nama saya adalah: '.$param1; // required
 });
 
 Route::get('/mahasiswa', function () {
-    return 'Halo Mahasiswa'; //required
+    return 'Halo Mahasiswa';
 })->name('mahasiswa.show');
 
 Route::get('/mahasiswa/{param1}', [MahasiswaController::class, 'show']);
@@ -38,17 +37,13 @@ Route::get('/fasilitas', [FasilitasController::class, 'index']);
 Route::get('/auth', [AuthController::class, 'index'])->name('login.form');
 Route::post('/auth/login', [AuthController::class, 'login'])->name('login.process');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-<<<<<<< HEAD
+Route::get('/home', [HomeController::class, 'index']);
+
 Route::resource('/fasilitas', FasilitasUmumController::class);
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-=======
-Route::get('/home',[HomeController::class,'index']);
+// Route::get('/fasilitas/create', [FormController::class, 'create'])->name('form.create');
+// Route::post('/fasilitas/store', [FormController::class, 'store'])->name('form.store');
 
-Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
->>>>>>> 683175343b02d72a3ddd7b0c668d28601b3c5deb

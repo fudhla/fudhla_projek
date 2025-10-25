@@ -32,7 +32,7 @@
                 </a>
                 <div class="navbar-nav w-100">
                     <a href="#" class="nav-item nav-link active"><i class="fa fa-building me-2"></i>Fasilitas Desa</a>
-                    <a href="{{ route ('guest.create')}}" class="nav-item nav-link"><i class="fa fa-calendar-check me-2"></i>Formulir Peminjaman</a>
+<a href="{{ route('fasilitas.create') }}" class="nav-item nav-link"><i class="fa fa-calendar-check me-2"></i>Formulir Peminjaman</a>
                     <a href="#" class="nav-item nav-link"><i class="fa fa-info-circle me-2"></i>Tentang Desa</a>
                     </div>
             </nav>
