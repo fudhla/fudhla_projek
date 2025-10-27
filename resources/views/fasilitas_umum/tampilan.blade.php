@@ -30,6 +30,10 @@
                     <a href="{{ url('/fasilitas/tampilan') }}" class="nav-item nav-link active">
                         <i class="fa fa-list me-2"></i>Data Fasilitas
                     </a>
+                <a href="{{ url('/about') }}" class="nav-item nav-link">
+    <i class="fa fa-info-circle me-2"></i>Tentang
+</a>
+
                 </div>
             </nav>
         </div>

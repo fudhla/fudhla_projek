@@ -29,3 +29,9 @@ Route::group(['middleware' => AuthCheck::class], function () {
 
 
 Route::resource('user', UserController::class);
+
+Route::get('/about', function () {
+    return view('fasilitas_umum.about');
+})->name('about');
+
+

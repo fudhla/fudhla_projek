@@ -10,11 +10,15 @@
                     <a href="{{ route('fasilitas.tampilan') }}" class="nav-item nav-link">
                         <i class="fa fa-building me-2"></i>Lihat Semua Fasilitas
                     </a>
-                    
+
                     <!-- Link ke halaman form peminjaman -->
                     <a href="{{ route('fasilitas.create') }}" class="nav-item nav-link active">
                         <i class="fa fa-calendar-check me-2"></i>Formulir Peminjaman
                     </a>
+                    <a href="{{ url('/about') }}" class="nav-item nav-link">
+    <i class="fa fa-info-circle me-2"></i>Tentang
+</a>
+
                 </div>
             </nav>
         </div>
