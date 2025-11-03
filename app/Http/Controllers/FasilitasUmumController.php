@@ -34,20 +34,19 @@ class FasilitasUmumController extends Controller
         ]);
 
         if ($request->hasFile('foto')) {
-            $validated['foto'] = $request->file('foto')->store('fasilitas', 'public');
+            // MENGUBAH: Menggunakan disk 'uploads_public' (sesuai config/filesystems.php)
+            $validated['foto'] = $request->file('foto')->store('fasilitas', 'uploads_public');
         }
 
         FasilitasUmum::create($validated);
         return redirect()->route('fasilitas.index')->with('success', 'Fasilitas berhasil ditambahkan.');
     }
 
-    // Variabel diganti dari $fasilita menjadi $fasilitas
     public function edit(FasilitasUmum $fasilitas)
     {
         return view('guest.edit', compact('fasilitas'));
     }
 
-    // Variabel diganti dari $fasilita menjadi $fasilitas
     public function update(Request $request, FasilitasUmum $fasilitas)
     {
         $validated = $request->validate([
@@ -62,21 +61,23 @@ class FasilitasUmumController extends Controller
         ]);
 
         if ($request->hasFile('foto')) {
-            if ($fasilitas->foto) { // Menggunakan $fasilitas->foto
-                Storage::disk('public')->delete($fasilitas->foto);
+            if ($fasilitas->foto) {
+                // MENGUBAH: Menghapus dari disk 'uploads_public'
+                Storage::disk('uploads_public')->delete($fasilitas->foto);
             }
-            $validated['foto'] = $request->file('foto')->store('fasilitas', 'public');
+            // MENGUBAH: Menyimpan ke disk 'uploads_public'
+            $validated['foto'] = $request->file('foto')->store('fasilitas', 'uploads_public');
         }
 
         $fasilitas->update($validated);
         return redirect()->route('fasilitas.index')->with('success', 'Data fasilitas berhasil diperbarui.');
     }
 
-    // Variabel diganti dari $fasilita menjadi $fasilitas
     public function destroy(FasilitasUmum $fasilitas)
     {
-        if ($fasilitas->foto) { // Menggunakan $fasilitas->foto
-            Storage::disk('public')->delete($fasilitas->foto);
+        if ($fasilitas->foto) {
+            // MENGUBAH: Menghapus dari disk 'uploads_public'
+            Storage::disk('uploads_public')->delete($fasilitas->foto);
         }
         $fasilitas->delete();
         return redirect()->route('fasilitas.index')->with('success', 'Data fasilitas berhasil dihapus.');

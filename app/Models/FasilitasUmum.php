@@ -20,6 +20,6 @@ class FasilitasUmum extends Model
         'rw',
         'kapasitas',
         'deskripsi',
-        'foto'
+        'foto',
     ];
 }
