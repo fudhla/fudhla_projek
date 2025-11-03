@@ -21,10 +21,6 @@ Route::group(['middleware' => AuthCheck::class], function () {
 
     // Halaman utama setelah login → Data Fasilitas
     Route::get('/fasilitas/tampilan', [FasilitasUmumController::class, 'tampilan'])->name('fasilitas.tampilan');
-
-    // CRUD Fasilitas
-    Route::resource('fasilitas', FasilitasUmumController::class);
-
 });
 
 
@@ -34,4 +30,7 @@ Route::get('/about', function () {
     return view('fasilitas_umum.about');
 })->name('about');
 
-
+Route::get('/', function () {
+    return redirect('fasilitas_umum');
+});
+Route::resource('fasilitas', FasilitasUmumController::class);

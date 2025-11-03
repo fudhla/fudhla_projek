@@ -1,53 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-
 <head>
-    {{--START CSS --}}
-    {{-- wa --}}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'Binsa Desa')</title>
 
+    {{-- CSS --}}
     @include('layouts.guest.css')
-    {{-- END CSS --}}
 </head>
 
 <body>
-    <div class="container-xxl position-relative bg-white d-flex p-0">
 
-        {{-- SIDEBAR --}}
-       @include('layouts.guest.sidebar')
-        {{-- END SIDEBAR --}}
+    {{-- HEADER --}}
+    @include('layouts.guest.header')
 
-        {{-- CONTENT --}}
-        <div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            {{-- SIDEBAR (optional, bisa disembunyikan kalau mau full page) --}}
+            <div class="col-md-3 col-lg-2 bg-light d-none d-md-block p-0">
+                @include('layouts.guest.sidebar')
+            </div>
 
-           {{-- HEADER --}}
-           @include('layouts.guest.header')
-            {{-- END HEADER --}}
-
-            {{-- content --}}
-            @yield('content')
-          {{-- end content --}}
-
-            {{-- FOOTER --}}
-           @include('layouts.guest.footer')
-            {{-- END FOOTER --}}
+            {{-- MAIN CONTENT --}}
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+                @yield('content')
+            </main>
         </div>
-        {{-- END CONTENT --}}
     </div>
 
-    {{-- START JS --}}
-    @include('layouts.guest.js')
-    {{-- END JS --}}
+    {{-- FOOTER --}}
+    @include('layouts.guest.footer')
 
-    <!-- Floating WhatsApp Button -->
-<a href="https://wa.me/6281234567890?text=Halo%20DesaKu!"
-   target="_blank"
-   class="floating-whatsapp"
-   title="Chat via WhatsApp">
-    <i class="fab fa-whatsapp"></i>
-</a>
+    {{-- JS --}}
+    @include('layouts.guest.js')
 
 </body>
 

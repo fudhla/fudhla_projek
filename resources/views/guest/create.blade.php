@@ -1,88 +1,101 @@
 @extends('layouts.guest.app')
 
 @section('content')
-    <!-- KONTEN UTAMA -->
     <div class="w-full px-6 py-6 mx-auto">
-
         <div class="flex flex-wrap -mx-3">
-            <div class="w-full max-w-full px-3 sm:flex-none">
+            <div class="w-full max-w-full px-3 mb-6 sm:w-8/12 lg:w-8/12 xl:w-7/12 mx-auto">
                 <div
-                    class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-                    <div class="flex-auto p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <h5 class="font-bold dark:text-white">Form Input User</h5>
-                            <!-- Link ke Daftar User -->
-                            <a href="{{ route('user.index') }}"
-                                class="text-sm font-semibold transition-all ease-nav-brand text-blue-500 hover:text-blue-700 dark:text-white dark:hover:text-gray-300">
-                                <i class="fa fa-list-alt sm:mr-1"></i>
-                                <span class="sm:inline">Daftar User</span>
-                            </a>
-                        </div>
+                    class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl rounded-2xl bg-clip-border">
+                    <div class="p-6 mb-0 text-center bg-gray-200 rounded-t-2xl">
+                        <h4 class="text-gray-800 font-bold">Tambah Fasilitas Umum Baru</h4>
+                        <p class="text-sm text-gray-600">Lengkapi data di bawah ini untuk fasilitas baru.</p>
+                    </div>
 
-                        <!-- Form Store User -->
-                        <form action="{{ route('user.store') }}" method="POST">
+                    <div class="flex-auto p-6">
+                        {{-- Menggunakan route fasilitas.store dan enctype untuk upload file --}}
+                        <form action="{{ route('fasilitas.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
-                            <!-- Nama Lengkap -->
                             <div class="mb-4">
-                                <label for="name"
-                                    class="block mb-2 text-sm font-medium text-slate-700 dark:text-white">Nama
-                                    Lengkap</label>
-                                <input type="text" name="name" id="name" value="{{ old('name') }}"
-                                    class="text-sm focus:shadow-primary-outline ease w-full leading-5.6 relative block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 px-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
-                                    placeholder="Contoh: fula" required>
-                                @error('name')
-                                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                <label class="block text-sm font-medium text-slate-700">Nama Fasilitas</label>
+                                <input type="text" name="nama"
+                                    class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+                                    placeholder="Contoh: Balai Desa" value="{{ old('nama') }}" required>
+                                @error('nama')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
 
-                            <!-- Email -->
                             <div class="mb-4">
-                                <label for="email"
-                                    class="block mb-2 text-sm font-medium text-slate-700 dark:text-white">Email</label>
-                                <input type="email" name="email" id="email" value="{{ old('email') }}"
-                                    class="text-sm focus:shadow-primary-outline ease w-full leading-5.6 relative block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 px-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
-                                    placeholder="Contoh: fula@example.com" required>
-                                @error('email')
-                                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                <label class="block text-sm font-medium text-slate-700">Jenis Fasilitas</label>
+                                <input type="text" name="jenis"
+                                    class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+                                    placeholder="Contoh: Gedung, Lapangan, Pos Ronda" value="{{ old('jenis') }}" required>
+                                @error('jenis')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
 
-                            <!-- Password Fields (Menggunakan Grid/Row untuk tampilan 2 kolom) -->
-                            <div class="flex flex-wrap -mx-3">
-                                <!-- Password -->
-                                <div class="w-full md:w-1/2 px-3 mb-4">
-                                    <label for="password"
-                                        class="block mb-2 text-sm font-medium text-slate-700 dark:text-white">Password</label>
-                                    <input type="password" name="password" id="password"
-                                        class="text-sm focus:shadow-primary-outline ease w-full leading-5.6 relative block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 px-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
-                                        placeholder="Masukkan password" required>
-                                    @error('password')
-                                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
-                                    @enderror
-                                </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-slate-700">Alamat Lengkap</label>
+                                <input type="text" name="alamat"
+                                    class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+                                    placeholder="Contoh: Jl. Merdeka No. 12" value="{{ old('alamat') }}" required>
+                                @error('alamat')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
 
-                                <!-- Konfirmasi Password -->
-                                <div class="w-full md:w-1/2 px-3 mb-4">
-                                    <label for="password_confirmation"
-                                        class="block mb-2 text-sm font-medium text-slate-700 dark:text-white">Konfirmasi
-                                        Password</label>
-                                    <input type="password" name="password_confirmation" id="password_confirmation"
-                                        class="text-sm focus:shadow-primary-outline ease w-full leading-5.6 relative block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 px-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
-                                        placeholder="Ulangi password" required>
+                            <div class="flex space-x-4 mb-4">
+                                <div class="w-1/2">
+                                    <label class="block text-sm font-medium text-slate-700">RT (Opsional)</label>
+                                    <input type="text" name="rt"
+                                        class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+                                        placeholder="001" value="{{ old('rt') }}">
+                                </div>
+                                <div class="w-1/2">
+                                    <label class="block text-sm font-medium text-slate-700">RW (Opsional)</label>
+                                    <input type="text" name="rw"
+                                        class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+                                        placeholder="002" value="{{ old('rw') }}">
                                 </div>
                             </div>
 
-                            <!-- Tombol Aksi -->
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-slate-700">Kapasitas (Orang/Unit)</label>
+                                <input type="number" name="kapasitas"
+                                    class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+                                    placeholder="Contoh: 100" value="{{ old('kapasitas') }}">
+                                @error('kapasitas')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-slate-700">Deskripsi</label>
+                                <textarea name="deskripsi" rows="3"
+                                    class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+                                    placeholder="Jelaskan fungsi dan kondisi fasilitas">{{ old('deskripsi') }}</textarea>
+                                @error('deskripsi')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="mb-6">
+                                <label class="block text-sm font-medium text-slate-700">Unggah Foto (Max 2MB)</label>
+                                <input type="file" name="foto"
+                                    class="w-full mt-1 p-2 border rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100">
+                                @error('foto')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
                             <div class="flex justify-end mt-6">
-                                <a href="{{ route('user.index') }}"
-                                    class="inline-block px-8 py-2 mr-2 text-xs font-bold leading-normal text-center text-slate-700 capitalize transition-all ease-in rounded-lg shadow-md bg-gray-200 bg-150 hover:shadow-xs hover:-translate-y-px">
-                                    Batal
-                                </a>
+                                <a href="{{ route('fasilitas.index') }}"
+                                    class="px-4 py-2 mr-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300">Batal</a>
                                 <button type="submit"
-                                    class="inline-block px-8 py-2 text-xs font-bold leading-normal text-center text-black capitalize transition-all ease-in rounded-lg shadow-md bg-blue-500 bg-150 hover:shadow-xs hover:-translate-y-px">
-                                    Simpan User
-                                </button>
+                                    class="px-4 py-2 text-sm text-white bg-green-600 rounded-lg hover:bg-green-700">Simpan
+                                    Fasilitas</button>
                             </div>
                         </form>
                     </div>
@@ -90,5 +103,4 @@
             </div>
         </div>
     </div>
-    <!--AKHIR KONTEN UTAMA -->
 @endsection
