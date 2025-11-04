@@ -1,52 +1,6 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts.guest.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Fasilitas Umum - Portal Desa</title>
-
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .hero {
-            background-image: url('./assets/images/banner-img1.png');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .overlay {
-            background-color: rgba(0, 45, 100, 0.7);
-        }
-    </style>
-</head>
-
-<body class="text-gray-800 bg-gray-50">
-
-    <!-- NAVBAR -->
-    <nav class="bg-blue-700 text-white px-6 py-4 shadow-lg flex justify-between items-center">
-        <h1 class="text-2xl font-bold">Portal Fasilitas Desa</h1>
-        <div class="space-x-6">
-            <a href="{{ url('/fasilitas') }}" class="hover:text-yellow-400">Beranda</a>
-            <a href="#" class="hover:text-yellow-400">Fasilitas</a>
-            <a href="#" class="hover:text-yellow-400">Kontak</a>
-        </div>
-    </nav>
-
-    <!-- HERO -->
-    <section class="hero relative h-[250px] flex items-center justify-center text-center text-white">
-        <div class="overlay absolute inset-0"></div>
-        <div class="relative z-10">
-            <h1 class="text-4xl font-bold mb-2">Tambah Fasilitas Umum Baru</h1>
-            <p class="text-blue-100">Isi data berikut untuk menambahkan fasilitas baru ke daftar desa.</p>
-        </div>
-    </section>
-
+@section('content')
     <!-- FORM SECTION -->
     <section class="py-16">
         <div class="container mx-auto px-6 max-w-3xl">
@@ -132,15 +86,4 @@
             </div>
         </div>
     </section>
-
-    <!-- FOOTER -->
-    <footer class="bg-blue-700 text-white py-8 mt-12">
-        <div class="container mx-auto text-center">
-            <p class="text-lg font-semibold">Portal Fasilitas Umum Desa</p>
-            <p class="text-sm text-blue-100 mt-1">© {{ date('Y') }} Desa Sejahtera | Semua Hak Dilindungi</p>
-        </div>
-    </footer>
-
-</body>
-
-</html>
+@endsection

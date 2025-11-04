@@ -4,6 +4,7 @@ use App\Http\Middleware\AuthCheck;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WargaController;
 use App\Http\Controllers\FasilitasUmumController;
 
 // Halaman welcome
@@ -22,15 +23,12 @@ Route::group(['middleware' => AuthCheck::class], function () {
     // Halaman utama setelah login → Data Fasilitas
     Route::get('/fasilitas/tampilan', [FasilitasUmumController::class, 'tampilan'])->name('fasilitas.tampilan');
 });
-
-
-Route::resource('user', UserController::class);
-
-Route::get('/about', function () {
-    return view('fasilitas_umum.about');
-})->name('about');
-
 Route::get('/', function () {
     return redirect('fasilitas_umum');
 });
-Route::resource('fasilitas', FasilitasUmumController::class);
+Route::resource('fasilitas', FasilitasUmumController::class)
+    ->parameters(['fasilitas' => 'fasilitas']);
+
+Route::resource('user', UserController::class);
+
+Route::resource('warga', WargaController::class);

@@ -1,117 +1,129 @@
 @extends('layouts.guest.app')
 
 @section('content')
-    <div class="w-full px-6 py-6 mx-auto">
-        <div class="flex flex-wrap -mx-3">
-            <div class="w-full max-w-full px-3 mb-6 sm:w-8/12 lg:w-8/12 xl:w-7/12 mx-auto">
-                <div
-                    class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl rounded-2xl bg-clip-border">
-                    <div class="p-6 mb-0 text-center bg-gray-200 rounded-t-2xl">
-                        <h4 class="text-gray-800 font-bold">Edit Fasilitas: {{ $fasilitas->nama }}</h4>
-                        <p class="text-sm text-gray-600">Perbarui informasi fasilitas di bawah ini.</p>
+    <div class="container mx-auto px-6 py-16">
+        <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-2xl">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6 border-b pb-4">
+                Edit Fasilitas Umum: {{ $fasilitas->nama }}
+            </h1>
+
+            {{-- Form edit --}}
+            <form action="{{ route('fasilitas.update', $fasilitas) }}" method="POST">
+
+                @csrf
+                @method('PUT')
+
+                {{-- Nama --}}
+                <div class="mb-5">
+                    <label for="nama" class="block text-sm font-medium text-gray-700 mb-1">Nama Fasilitas</label>
+                    <input type="text" name="nama" id="nama" value="{{ old('nama', $fasilitas->nama) }}"
+                        class="w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500"
+                        required>
+                    @error('nama')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Jenis --}}
+                <div class="mb-5">
+                    <label for="jenis" class="block text-sm font-medium text-gray-700 mb-1">Jenis Fasilitas</label>
+                    <select name="jenis" id="jenis"
+                        class="w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500"
+                        required>
+                        <option value="">Pilih Jenis</option>
+                        @foreach (['Lapangan', 'Aula', 'Tempat Ibadah', 'Lainnya'] as $jenis)
+                            <option value="{{ $jenis }}"
+                                {{ old('jenis', $fasilitas->jenis) == $jenis ? 'selected' : '' }}>
+                                {{ $jenis }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('jenis')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Alamat, RT/RW --}}
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+                    <div>
+                        <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat</label>
+                        <input type="text" name="alamat" id="alamat" value="{{ old('alamat', $fasilitas->alamat) }}"
+                            class="w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500"
+                            required>
+                        @error('alamat')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
-
-                    <div class="flex-auto p-6">
-                        {{-- Menggunakan route fasilitas.update dan method PUT --}}
-                        <form action="{{ route('fasilitas.update', $fasilitas->fasilitas_id) }}" method="POST"
-                            enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
-
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium text-slate-700">Nama Fasilitas</label>
-                                <input type="text" name="nama"
-                                    class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
-                                    placeholder="Contoh: Balai Desa" value="{{ old('nama', $fasilitas->nama) }}" required>
-                                @error('nama')
-                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium text-slate-700">Jenis Fasilitas</label>
-                                <input type="text" name="jenis"
-                                    class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
-                                    placeholder="Contoh: Gedung, Lapangan, Pos Ronda"
-                                    value="{{ old('jenis', $fasilitas->jenis) }}" required>
-                                @error('jenis')
-                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium text-slate-700">Alamat Lengkap</label>
-                                <input type="text" name="alamat"
-                                    class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
-                                    placeholder="Contoh: Jl. Merdeka No. 12" value="{{ old('alamat', $fasilitas->alamat) }}"
-                                    required>
-                                @error('alamat')
-                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <div class="flex space-x-4 mb-4">
-                                <div class="w-1/2">
-                                    <label class="block text-sm font-medium text-slate-700">RT (Opsional)</label>
-                                    <input type="text" name="rt"
-                                        class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
-                                        placeholder="001" value="{{ old('rt', $fasilitas->rt) }}">
-                                </div>
-                                <div class="w-1/2">
-                                    <label class="block text-sm font-medium text-slate-700">RW (Opsional)</label>
-                                    <input type="text" name="rw"
-                                        class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
-                                        placeholder="002" value="{{ old('rw', $fasilitas->rw) }}">
-                                </div>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium text-slate-700">Kapasitas (Orang/Unit)</label>
-                                <input type="number" name="kapasitas"
-                                    class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
-                                    placeholder="Contoh: 100" value="{{ old('kapasitas', $fasilitas->kapasitas) }}">
-                                @error('kapasitas')
-                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium text-slate-700">Deskripsi</label>
-                                <textarea name="deskripsi" rows="3"
-                                    class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
-                                    placeholder="Jelaskan fungsi dan kondisi fasilitas">{{ old('deskripsi', $fasilitas->deskripsi) }}</textarea>
-                                @error('deskripsi')
-                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <div class="mb-6">
-                                <label class="block text-sm font-medium text-slate-700">Ganti Foto (Max 2MB) - Saat ini:
-                                    @if ($fasilitas->foto)
-                                        <a href="{{ asset('storage/' . $fasilitas->foto) }}" target="_blank"
-                                            class="text-blue-500">Lihat Foto</a>
-                                    @else
-                                        Tidak ada
-                                    @endif
-                                </label>
-                                <input type="file" name="foto"
-                                    class="w-full mt-1 p-2 border rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100">
-                                @error('foto')
-                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <div class="flex justify-end mt-6">
-                                <a href="{{ route('fasilitas.index') }}"
-                                    class="px-4 py-2 mr-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300">Batal</a>
-                                <button type="submit"
-                                    class="px-4 py-2 text-sm text-white bg-green-600 rounded-lg hover:bg-green-700">Perbarui
-                                    Fasilitas</button>
-                            </div>
-                        </form>
+                    <div>
+                        <label for="rt" class="block text-sm font-medium text-gray-700 mb-1">RT</label>
+                        <input type="text" name="rt" id="rt" value="{{ old('rt', $fasilitas->rt) }}"
+                            class="w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500">
+                        @error('rt')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="rw" class="block text-sm font-medium text-gray-700 mb-1">RW</label>
+                        <input type="text" name="rw" id="rw" value="{{ old('rw', $fasilitas->rw) }}"
+                            class="w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500">
+                        @error('rw')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
-            </div>
+
+                {{-- Kapasitas --}}
+                <div class="mb-5">
+                    <label for="kapasitas" class="block text-sm font-medium text-gray-700 mb-1">Kapasitas (Opsional)</label>
+                    <input type="number" name="kapasitas" id="kapasitas"
+                        value="{{ old('kapasitas', $fasilitas->kapasitas) }}"
+                        class="w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500">
+                    @error('kapasitas')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Deskripsi --}}
+                <div class="mb-5">
+                    <label for="deskripsi" class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
+                    <textarea name="deskripsi" id="deskripsi" rows="4"
+                        class="w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500" required>{{ old('deskripsi', $fasilitas->deskripsi) }}</textarea>
+                    @error('deskripsi')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Foto --}}
+                <div class="mb-5">
+                    <label for="foto" class="block text-sm font-medium text-gray-700 mb-1">Foto (Kosongkan jika tidak
+                        diubah)</label>
+                    @if ($fasilitas->foto)
+                        <p class="text-xs text-gray-500 mb-2">Foto saat ini:
+                            <a href="{{ asset('uploads/' . ltrim($fasilitas->foto, '/')) }}" target="_blank"
+                                class="text-blue-600 hover:underline">Lihat Foto</a>
+                        </p>
+                    @endif
+                    <input type="file" name="foto" id="foto"
+                        class="w-full border border-gray-300 rounded-lg p-3 file:mr-4 file:py-2 file:px-4
+                           file:rounded-lg file:border-0 file:text-sm file:font-semibold
+                           file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    @error('foto')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Tombol --}}
+                <div class="flex justify-end space-x-3">
+                    <a href="{{ route('fasilitas.index') }}"
+                        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-200">
+                        Batal
+                    </a>
+                    <button type="submit"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200">
+                        Simpan Perubahan
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection
