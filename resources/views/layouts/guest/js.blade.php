@@ -57,3 +57,7 @@
         }
     });
 </script>
+<a href="https://wa.me/62895623447200text=Halo%2C%20saya%20punya%20pertanyaan%20mengenai%20aplikasi%20Fasilitas%20%26%20Warga."
+    target="_blank" class="fab-whatsapp">
+    <i class="fab fa-whatsapp"></i>
+</a>
