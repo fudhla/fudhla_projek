@@ -11,7 +11,7 @@ class AuthController extends Controller
      */
     public function index()
     {
-        return view('auth.login-form'); // pastikan blade ada
+        return view('guest/auth.login-form'); // pastikan blade ada
     }
 
     /**
@@ -35,7 +35,7 @@ class AuthController extends Controller
             'user_email' => $request->email,
         ]);
 
-        return redirect()->route('fasilitas.tampilan')->with('success', 'Login berhasil dengan email: ' . $request->email);
+        return redirect()->route('fasilitas.index')->with('success', 'Login berhasil dengan email: ' . $request->email);
     }
 
     /**
