@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -11,11 +13,11 @@ class AuthController extends Controller
      */
     public function index()
     {
-        return view('guest/auth.login-form'); // pastikan blade ada
+        return view('guest/auth.login-form'); // Pastikan file Blade ini ada
     }
 
     /**
-     * Proses login (bebas akun)
+     * Proses login dengan verifikasi password hash
      */
     public function login(Request $request)
     {
@@ -30,12 +32,26 @@ class AuthController extends Controller
             'password.min'      => 'Password minimal 3 karakter.',
         ]);
 
-        // Login berhasil, simpan session
+        // Cek apakah email ada di database
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->withErrors(['email' => 'Email tidak ditemukan.'])->withInput();
+        }
+
+        // Verifikasi password dengan Hash::check()
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'Password salah.'])->withInput();
+        }
+
+        // Login berhasil, simpan data user ke session
         session([
-            'user_email' => $request->email,
+            'user_id'    => $user->id,
+            'user_name'  => $user->name,
+            'user_email' => $user->email,
         ]);
 
-        return redirect()->route('fasilitas.index')->with('success', 'Login berhasil dengan email: ' . $request->email);
+        return redirect()->route('fasilitas.index')->with('success', 'Login berhasil! Selamat datang, ' . $user->name);
     }
 
     /**
