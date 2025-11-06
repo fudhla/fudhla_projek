@@ -36,3 +36,6 @@ Route::middleware([AuthCheck::class])->group(function () {
     Route::resource('user', UserController::class);
     Route::resource('warga', WargaController::class);
 });
+Route::get('/about', function () {
+    return view('guest/about.about');
+})->name('about');
