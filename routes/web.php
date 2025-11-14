@@ -1,11 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FasilitasUmumController;
+use App\Http\Controllers\PeminjamanFasilitasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WargaController;
-use App\Http\Controllers\FasilitasUmumController;
 use App\Http\Middleware\AuthCheck;
+use Illuminate\Support\Facades\Route;
 
 // 🏠 Halaman utama untuk Guest (pengunjung)
 Route::get('/', function () {
@@ -39,3 +40,5 @@ Route::middleware([AuthCheck::class])->group(function () {
 Route::get('/about', function () {
     return view('guest/about.about');
 })->name('about');
+
+Route::resource('pinjam', PeminjamanFasilitasController::class)->except(['show']);

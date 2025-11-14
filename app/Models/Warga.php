@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,4 +15,10 @@ class Warga extends Model
         'alamat',
         'no_hp',
     ];
+
+    public function peminjaman()
+    {
+        return $this->hasMany(PeminjamanFasilitas::class, 'warga_id');
+    }
+
 }
