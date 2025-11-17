@@ -8,7 +8,8 @@
             </h1>
 
             {{-- Form edit --}}
-            <form action="{{ route('fasilitas.update', $fasilitas) }}" method="POST">
+            <form action="{{ route('fasilitas.update', $fasilitas->fasilitas_id) }}" method="POST">
+
 
                 @csrf
                 @method('PUT')

@@ -29,8 +29,8 @@
                                     class="block mb-2 text-sm font-medium text-slate-700 dark:text-white">Nama
                                     Lengkap</label>
                                 <input type="text" name="name" id="name" value="{{ old('name') }}"
-                                    class="text-sm focus:shadow-primary-outline ease w-full leading-5.6 relative block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 px-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
-                                    placeholder="Contoh: Nabila Putri" required>
+                                    class="text-sm focus:shadow-primary-outline ease w-full leading-5.6 relative block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 bg-white bg-clip-padding py-2 px-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
+                                    placeholder="Contoh: Fudhla" required>
                                 @error('name')
                                     <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
@@ -41,8 +41,8 @@
                                 <label for="email"
                                     class="block mb-2 text-sm font-medium text-slate-700 dark:text-white">Email</label>
                                 <input type="email" name="email" id="email" value="{{ old('email') }}"
-                                    class="text-sm focus:shadow-primary-outline ease w-full leading-5.6 relative block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 px-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
-                                    placeholder="Contoh: nabila@example.com" required>
+                                    class="text-sm focus:shadow-primary-outline ease w-full leading-5.6 relative block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850  bg-white bg-clip-padding py-2 px-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
+                                    placeholder="Contoh: fduhla@example.com" required>
                                 @error('email')
                                     <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
@@ -55,7 +55,7 @@
                                     <label for="password"
                                         class="block mb-2 text-sm font-medium text-slate-700 dark:text-white">Password</label>
                                     <input type="password" name="password" id="password"
-                                        class="text-sm focus:shadow-primary-outline ease w-full leading-5.6 relative block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 px-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
+                                        class="text-sm focus:shadow-primary-outline ease w-full leading-5.6 relative block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 bg-white bg-clip-padding py-2 px-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
                                         placeholder="Masukkan password" required>
                                     @error('password')
                                         <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
@@ -68,7 +68,7 @@
                                         class="block mb-2 text-sm font-medium text-slate-700 dark:text-white">Konfirmasi
                                         Password</label>
                                     <input type="password" name="password_confirmation" id="password_confirmation"
-                                        class="text-sm focus:shadow-primary-outline ease w-full leading-5.6 relative block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 px-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
+                                        class="text-sm focus:shadow-primary-outline ease w-full leading-5.6 relative block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 bg-white bg-clip-padding py-2 px-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
                                         placeholder="Ulangi password" required>
                                 </div>
                             </div>
