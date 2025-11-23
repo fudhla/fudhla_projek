@@ -15,7 +15,9 @@ use App\Http\Controllers\PeminjamanFasilitasController;
 */
 
 Route::get('/', [FasilitasUmumController::class, 'index'])->name('home');
-Route::get('/about', fn() => view('guest.about'))->name('about');
+Route::get('/about', function () {
+    return view('guest.about.about');
+})->name('about');
 
 // Guest FULL CRUD Fasilitas
 Route::resource('fasilitas', FasilitasUmumController::class)
