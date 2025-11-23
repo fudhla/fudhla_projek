@@ -20,6 +20,19 @@
                     </div>
                 @endif
 
+                <!-- Search -->
+                <form action="{{ route('user.index') }}" method="GET" class="flex items-center gap-3 mb-4">
+                    <input type="text" name="search" value="{{ request('search') }}"
+                        placeholder="Cari nama atau email..."
+                        class="px-3 py-2 border rounded-lg w-64 dark:bg-slate-800 dark:text-white">
+
+                    <button type="submit"
+                        class="px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+                        Cari
+                    </button>
+                </form>
+
+
                 <!-- Tombol Tambah User -->
                 <div class="mb-4 flex justify-end">
                     <a href="{{ route('user.create') }}"
@@ -95,10 +108,12 @@
                                     @endif
                                 </tbody>
                             </table>
+                            <div class="mt-4">
+                                {{ $users->appends(request()->query())->links('pagination::tailwind') }}
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

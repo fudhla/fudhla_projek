@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Warga;
@@ -10,10 +9,19 @@ class WargaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $wargas = Warga::latest()->get();
-        return view('guest/warga.index', compact('wargas'));
+        $wargas = Warga::when($request->search, function ($q) use ($request) {
+            $q->where('nama', 'like', '%' . $request->search . '%')
+                ->orWhere('nik', 'like', '%' . $request->search . '%');
+        })
+            ->when($request->jenis_kelamin, function ($q) use ($request) {
+                $q->where('jenis_kelamin', $request->jenis_kelamin);
+            })
+            ->latest()
+            ->paginate(9);
+
+        return view('guest.warga.index', compact('wargas'));
     }
 
     /**
@@ -30,11 +38,11 @@ class WargaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nik' => 'required|string|unique:wargas,nik|max:16',
-            'nama' => 'required|string|max:255',
+            'nik'           => 'required|string|unique:wargas,nik|max:16',
+            'nama'          => 'required|string|max:255',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'alamat' => 'required|string',
-            'no_hp' => 'nullable|string|max:15',
+            'alamat'        => 'required|string',
+            'no_hp'         => 'nullable|string|max:15',
         ]);
 
         Warga::create($request->all());
@@ -66,11 +74,11 @@ class WargaController extends Controller
     {
         $request->validate([
             // nik harus unik, kecuali NIK milik warga yang sedang diedit
-            'nik' => 'required|string|max:16|unique:wargas,nik,' . $warga->id,
-            'nama' => 'required|string|max:255',
+            'nik'           => 'required|string|max:16|unique:wargas,nik,' . $warga->id,
+            'nama'          => 'required|string|max:255',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'alamat' => 'required|string',
-            'no_hp' => 'nullable|string|max:15',
+            'alamat'        => 'required|string',
+            'no_hp'         => 'nullable|string|max:15',
         ]);
 
         $warga->update($request->all());

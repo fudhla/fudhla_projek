@@ -12,7 +12,6 @@ class PeminjamanFasilitas extends Model
     protected $primaryKey = 'pinjam_id';
 
     protected $fillable = [
-        'fasilitas_id',
         'warga_id',
         'tanggal_mulai',
         'tanggal_selesai',
@@ -21,12 +20,6 @@ class PeminjamanFasilitas extends Model
         'total_biaya',
         'bukti_bayar',
     ];
-
-    /* Relasi */
-    public function fasilitas()
-    {
-        return $this->belongsTo(FasilitasUmum::class, 'fasilitas_id');
-    }
 
     public function warga()
     {

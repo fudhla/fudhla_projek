@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('peminjaman_fasilitas', function (Blueprint $table) {
             $table->id('pinjam_id');
 
-            $table->unsignedBigInteger('fasilitas_id');
+            // Hanya relasi warga
             $table->unsignedBigInteger('warga_id');
 
             $table->date('tanggal_mulai');
@@ -26,19 +26,12 @@ return new class extends Migration
 
             $table->timestamps();
 
-            // FK fasilitas
-            $table->foreign('fasilitas_id')
-                ->references('fasilitas_id')
-                ->on('fasilitas_umum')
-                ->onDelete('cascade');
-
-            // FK warga (sesuaikan)
+            // Foreign key warga
             $table->foreign('warga_id')
-                ->references('id') // ← ini yang benar
+                ->references('id')
                 ->on('wargas')
                 ->onDelete('cascade');
         });
-
     }
 
     /**
@@ -46,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('peminjamen');
+        Schema::dropIfExists('peminjaman_fasilitas');
     }
 };

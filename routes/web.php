@@ -1,11 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\FasilitasUmumController;
-use App\Http\Controllers\PeminjamanFasilitasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WargaController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FasilitasUmumController;
+use App\Http\Controllers\PeminjamanFasilitasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +37,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 |--------------------------------------------------------------------------
 */
 
-Route::get('/dashboard', [FasilitasUmumController::class, 'tampilan'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::resource('user', UserController::class);
 Route::resource('warga', WargaController::class);
@@ -46,4 +47,4 @@ Route::resource('warga', WargaController::class);
 | PEMINJAMAN
 |--------------------------------------------------------------------------
 */
-Route::resource('pinjam', PeminjamanFasilitasController::class)->except(['show']);
+Route::resource('pinjam', PeminjamanFasilitasController::class);

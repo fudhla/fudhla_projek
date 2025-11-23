@@ -1,75 +1,77 @@
 @extends('layouts.guest.app')
 
 @section('content')
-<div class="p-6">
+    <div class="p-6">
 
-    <h1 class="text-3xl font-bold text-gray-800 mb-6">Daftar Peminjaman Fasilitas</h1>
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Daftar Peminjaman Fasilitas</h1>
 
-    <!-- Tombol Tambah -->
-    <div class="mb-6">
-        <a href="{{ route('pinjam.create') }}"
-            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow">
-            + Tambah Peminjaman
-        </a>
-    </div>
+        <div class="mb-6">
+            <a href="{{ route('pinjam.create') }}"
+                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow">
+                + Tambah Peminjaman
+            </a>
+        </div>
 
-    <!-- Grid Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <form method="GET" action="{{ route('pinjam.index') }}" class="flex items-center gap-3 mb-6">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari warga..."
+                class="px-3 py-2 border rounded-lg w-60">
 
-        @foreach ($datas as $item)
-            <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+            <select name="status" class="px-3 py-2 border rounded-lg">
+                <option value="">-- Status --</option>
+                <option value="Disetujui" {{ request('status') == 'Disetujui' ? 'selected' : '' }}>Disetujui</option>
+                <option value="Ditolak" {{ request('status') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
+                <option value="Pending" {{ request('status') == 'Pending' ? 'selected' : '' }}>Pending</option>
+            </select>
 
-                <!-- Nama Fasilitas -->
-                <h2 class="text-xl font-semibold text-gray-800 mb-2">
-                    {{ $item->fasilitas->nama_fasilitas ?? '-' }}
-                </h2>
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                Filter
+            </button>
+        </form>
 
-                <!-- Nama Warga -->
-                <p class="text-gray-600 text-sm mb-1">
-                    <span class="font-medium">Dipinjam oleh:</span>
-                    {{ $item->warga->nama ?? '-' }}
-                </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach ($peminjamans as $item)
+                <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
 
-                <!-- Tanggal Peminjaman -->
-                <p class="text-gray-600 text-sm mb-1">
-                    <span class="font-medium">Tanggal:</span>
-                    {{ \Carbon\Carbon::parse($item->tanggal_peminjaman)->format('d M Y') }}
-                </p>
+                    <p class="text-gray-600 text-sm mb-1">
+                        <span class="font-medium">Dipinjam oleh:</span>
+                        {{ $item->warga->nama ?? '-' }}
+                    </p>
 
-                <!-- Status -->
-                <span class="inline-block mt-3 px-3 py-1 text-sm rounded-full
-                    @if($item->status == 'Dipinjam') bg-yellow-100 text-yellow-700
-                    @elseif($item->status == 'Selesai') bg-green-100 text-green-700
-                    @else bg-gray-100 text-gray-700
-                    @endif">
-                    {{ $item->status }}
-                </span>
+                    <p class="text-gray-600 text-sm mb-1">
+                        <span class="font-medium">Tanggal:</span>
+                        {{ \Carbon\Carbon::parse($item->tanggal_mulai)->format('d M Y') }} -
+                        {{ \Carbon\Carbon::parse($item->tanggal_selesai)->format('d M Y') }}
+                    </p>
 
-                <!-- Buttons -->
-                <div class="flex justify-end space-x-2 mt-4">
+                    <span
+                        class="inline-block mt-3 px-3 py-1 text-sm rounded-full
+                        @if ($item->status == 'Pending') bg-yellow-100 text-yellow-700
+                        @elseif($item->status == 'Disetujui') bg-green-100 text-green-700
+                        @else bg-red-100 text-red-700 @endif">
+                        {{ $item->status }}
+                    </span>
 
-                    <!-- Edit -->
-                    <a href="{{ route('pinjam.edit', $item->pinjam_id) }}"
-                        class="text-blue-600 hover:text-blue-800 font-medium">
-                        Edit
-                    </a>
+                    <div class="flex justify-end space-x-2 mt-4">
+                        <a href="{{ route('pinjam.edit', $item) }}"
+                            class="text-blue-600 hover:text-blue-800 font-medium">Edit</a>
 
-                    <!-- Delete -->
-                    <form action="{{ route('pinjam.destroy', $item->pinjam_id) }}" method="POST"
-                        onsubmit="return confirm('Yakin ingin menghapus?')">
-                        @csrf
-                        @method('DELETE')
-                        <button class="text-red-600 hover:text-red-800 font-medium">
-                            Hapus
-                        </button>
-                    </form>
+
+                        <form action="{{ route('pinjam.destroy', $item) }}" method="POST"
+                            onsubmit="return confirm('Yakin ingin menghapus?')">
+                            @csrf
+                            @method('DELETE')
+                            <button class="text-red-600 hover:text-red-800 font-medium">Hapus</button>
+                        </form>
+
+                    </div>
 
                 </div>
+            @endforeach
+        </div>
 
-            </div>
-        @endforeach
+        <div class="mt-6">
+            {{ $peminjamans->appends(request()->query())->links('pagination::tailwind') }}
+        </div>
 
     </div>
-
-</div>
 @endsection
