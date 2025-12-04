@@ -11,7 +11,7 @@ class AuthCheck
     {
         // Cek session, jika tidak ada redirect ke login
         if (!$request->session()->has('user_email')) {
-            return redirect('/auth')->with('error', 'Anda harus login terlebih dahulu!');
+            return redirect('login.form')->with('error', 'Anda harus login terlebih dahulu!');
         }
 
         return $next($request);

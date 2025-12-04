@@ -80,9 +80,9 @@
                     <div class="mb-8">
                         <label class="block font-semibold text-gray-700 mb-2">Upload Bukti Bayar (Opsional)</label>
                         <input type="file" name="bukti_bayar"
-                            class="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none
-                               file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0
-                               file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            class="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-gray-50
+                            file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold
+                            file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     </div>
 
                     {{-- Tombol --}}

@@ -27,6 +27,15 @@
             </div>
 
             <div class="mb-4">
+                <label for="role" class="block text-gray-700 font-medium mb-1">Role</label>
+                <select name="role" id="role"
+                    class="w-full border-gray-300 rounded-md p-2 focus:ring-blue-400 focus:border-blue-400">
+                    <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                    <option value="guest" {{ $user->role == 'guest' ? 'selected' : '' }}>Guest</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
                 <label for="password" class="block text-gray-700 font-medium mb-1">Password (Opsional)</label>
                 <input type="password" name="password" id="password"
                     class="w-full border-gray-300 rounded-md p-2 focus:ring-blue-400 focus:border-blue-400">

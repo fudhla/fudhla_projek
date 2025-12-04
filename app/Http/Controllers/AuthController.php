@@ -1,10 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -35,20 +35,23 @@ class AuthController extends Controller
         // Cek apakah email ada di database
         $user = User::where('email', $request->email)->first();
 
-        if (!$user) {
+        if (! $user) {
             return back()->withErrors(['email' => 'Email tidak ditemukan.'])->withInput();
         }
 
         // Verifikasi password dengan Hash::check()
-        if (!Hash::check($request->password, $user->password)) {
+        if (! Hash::check($request->password, $user->password)) {
             return back()->withErrors(['password' => 'Password salah.'])->withInput();
         }
 
+        Auth::login($user);
+        // Login berhasil, simpan data user ke session
         // Login berhasil, simpan data user ke session
         session([
             'user_id'    => $user->id,
             'user_name'  => $user->name,
             'user_email' => $user->email,
+            'user_role'  => $user->role, // <----- TAMBAHKAN INI
         ]);
 
         return redirect()->route('fasilitas.index')->with('success', 'Login berhasil! Selamat datang, ' . $user->name);

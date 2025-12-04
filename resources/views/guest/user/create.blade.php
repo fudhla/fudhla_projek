@@ -48,6 +48,16 @@
                                 @enderror
                             </div>
 
+                            <div class="mb-4">
+                                <label for="role"
+                                    class="block mb-2 text-sm font-medium text-slate-700 dark:text-white">Role</label>
+                                <select name="role" id="role"
+                                    class="text-sm block w-full border border-gray-300 rounded-lg p-2 dark:bg-slate-850">
+                                    <option value="admin">Admin</option>
+                                    <option value="guest" selected>Guest</option>
+                                </select>
+                            </div>
+
                             <!-- Password Fields (Menggunakan Grid/Row untuk tampilan 2 kolom) -->
                             <div class="flex flex-wrap -mx-3">
                                 <!-- Password -->

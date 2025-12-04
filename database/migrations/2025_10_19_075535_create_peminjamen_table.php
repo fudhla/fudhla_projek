@@ -30,9 +30,6 @@ return new class extends Migration
             // biaya
             $table->decimal('total_biaya', 12, 2)->default(0);
 
-            // bukti pembayaran
-            $table->string('bukti_bayar')->nullable();
-
             // status: Pending, Disetujui, Ditolak
             $table->string('status')->default('Pending');
 

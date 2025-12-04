@@ -58,6 +58,9 @@
                     </span>
 
                     <div class="flex justify-end space-x-2 mt-4">
+                        <a href="{{ route('pinjam.show', $item->pinjam_id) }}"
+                            class="text-green-600 hover:text-green-800 font-medium">Detail</a>
+
                         <a href="{{ route('pinjam.edit', $item) }}"
                             class="text-blue-600 hover:text-blue-800 font-medium">Edit</a>
 

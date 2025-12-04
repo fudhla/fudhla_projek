@@ -1,5 +1,21 @@
 @extends('layouts.guest.app')
 @section('content')
+
+    {{-- ===================================== --}}
+    {{-- TOMBOL LOGOUT (POJOK KANAN ATAS) --}}
+    {{-- ===================================== --}}
+    <div class="container mx-auto px-6 mt-6 flex justify-end">
+        <form action="{{ route('logout') }}" method="GET">
+            @csrf
+            <button
+                type="submit"
+                class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow transition duration-200 flex items-center gap-2"
+            >
+                <i class="bi bi-box-arrow-right text-lg"></i> Logout
+            </button>
+        </form>
+    </div>
+
     <!-- HERO SECTION -->
     <section class="hero relative h-[500px] flex items-center justify-center text-center text-white">
         <div class="hero-overlay absolute inset-0"></div>
@@ -84,7 +100,7 @@
                                         <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor"
                                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0L6.343 16.657a8 8 8 0 1111.314 0z">
+                                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0L6.343 16.657a8 8 0 1111.314 0z">
                                             </path>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -146,5 +162,7 @@
             </p>
         </div>
     </section>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 @endsection
