@@ -35,16 +35,18 @@ class PeminjamanFasilitasController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'fasilitas' => 'required|string',
             'warga_id' => 'required',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date',
             'tujuan' => 'required',
             'total_biaya' => 'required|numeric',
             'bukti_bayar' => 'nullable|mimes:jpg,png,pdf|max:2048',
-            'status' => 'required|in:Pending,Disetujui,Ditolak',
+            'status' => 'nullable|in:Pending,Disetujui,Ditolak',
         ]);
 
         $data = $request->all();
+        $data['status'] = 'Pending';
 
         if ($request->hasFile('bukti_bayar')) {
             $data['bukti_bayar'] = $request->file('bukti_bayar')->store('bukti_bayar', 'public');
@@ -67,14 +69,16 @@ class PeminjamanFasilitasController extends Controller
     {
         $data = PeminjamanFasilitas::findOrFail($id);
 
+
         $request->validate([
+            'fasilitas' => 'required|string',
             'warga_id' => 'required',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date',
             'tujuan' => 'required',
             'total_biaya' => 'required|numeric',
             'bukti_bayar' => 'nullable|mimes:jpg,png,pdf|max:2048',
-            'status' => 'required|in:Pending,Disetujui,Ditolak',
+            'status' => 'nullable|in:Pending,Disetujui,Ditolak',
         ]);
 
         $input = $request->all();

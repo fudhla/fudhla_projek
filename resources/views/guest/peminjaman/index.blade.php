@@ -32,6 +32,12 @@
             @foreach ($peminjamans as $item)
                 <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
 
+                    {{-- Fasilitas --}}
+                    <p class="text-gray-700 text-sm mb-2">
+                        <span class="font-semibold">Fasilitas:</span>
+                        {{ $item->fasilitas ?? '-' }}
+                    </p>
+
                     <p class="text-gray-600 text-sm mb-1">
                         <span class="font-medium">Dipinjam oleh:</span>
                         {{ $item->warga->nama ?? '-' }}
@@ -54,7 +60,6 @@
                     <div class="flex justify-end space-x-2 mt-4">
                         <a href="{{ route('pinjam.edit', $item) }}"
                             class="text-blue-600 hover:text-blue-800 font-medium">Edit</a>
-
 
                         <form action="{{ route('pinjam.destroy', $item) }}" method="POST"
                             onsubmit="return confirm('Yakin ingin menghapus?')">

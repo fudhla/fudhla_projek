@@ -12,6 +12,7 @@ class PeminjamanFasilitas extends Model
     protected $primaryKey = 'pinjam_id';
 
     protected $fillable = [
+        'fasilitas',
         'warga_id',
         'tanggal_mulai',
         'tanggal_selesai',
