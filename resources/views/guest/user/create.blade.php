@@ -42,7 +42,7 @@
                                     class="block mb-2 text-sm font-medium text-slate-700 dark:text-white">Email</label>
                                 <input type="email" name="email" id="email" value="{{ old('email') }}"
                                     class="text-sm focus:shadow-primary-outline ease w-full leading-5.6 relative block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850  bg-white bg-clip-padding py-2 px-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
-                                    placeholder="Contoh: fduhla@example.com" required>
+                                    placeholder="Contoh: fudhla@example.com" required>
                                 @error('email')
                                     <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
