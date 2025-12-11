@@ -36,7 +36,7 @@ class PeminjamanFasilitasController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'fasilitas' => 'required|string',
+            'fasilitas_id' => 'required|string',
             'warga_id' => 'required',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date',
@@ -79,7 +79,7 @@ class PeminjamanFasilitasController extends Controller
         $data = PeminjamanFasilitas::findOrFail($id);
 
         $request->validate([
-            'fasilitas' => 'required|string',
+            'fasilitas_id' => 'required|string',
             'warga_id' => 'required',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date',

@@ -20,7 +20,7 @@ class PeminjamanFasilitasSeeder extends Seeder
             return;
         }
 
-        foreach (range(1, 20) as $i) {
+        foreach (range(1, 120) as $i) {
 
             $tanggalMulai   = $faker->dateTimeBetween('-1 month', 'now');
             $tanggalSelesai = (clone $tanggalMulai)->modify('+' . rand(1, 3) . ' days');

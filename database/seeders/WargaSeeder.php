@@ -10,7 +10,7 @@ class WargaSeeder extends Seeder
     {
         $faker = \Faker\Factory::create('id_ID'); // Faker Indonesia
 
-        foreach (range(1, 20) as $index) {
+        foreach (range(1, 120) as $index) {
 
             DB::table('wargas')->insert([
                 'nik'           => $faker->unique()->numerify('################'), // 16 digit acak

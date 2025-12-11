@@ -25,8 +25,10 @@ Route::get('/about', function () {
 //     ->middleware('checkislogin');
 
 Route::middleware(['checkislogin'])->group(function () {
-    Route::resource('fasilitas', FasilitasUmumController::class);
+    Route::resource('fasilitas', FasilitasUmumController::class)
+        ->parameters(['fasilitas' => 'fasilitas']);
 });
+
 
 /*
 |--------------------------------------------------------------------------
@@ -63,3 +65,7 @@ Route::resource('pinjam', PeminjamanFasilitasController::class);
 
 // web.php
 Route::delete('media/{media}', [MediaController::class, 'destroy'])->name('media.destroy');
+
+//kontek
+Route::get('/kontak', function () { return view('guest.kontak.kontak');})->name('kontak');
+

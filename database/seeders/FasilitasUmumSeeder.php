@@ -13,17 +13,17 @@ class FasilitasUmumSeeder extends Seeder
 
         $jenisList = ['Aula', 'Lapangan', 'Balai Desa', 'Ruang Pertemuan'];
 
-        foreach (range(1, 10) as $i) {
+        foreach (range(1, 100) as $i) {
 
             DB::table('fasilitas_umum')->insert([
-                'nama'       => 'Fasilitas ' . $faker->word(),
+                'nama'       => $faker->company . ' ' . $faker->randomElement($jenisList),
                 'jenis'      => $faker->randomElement($jenisList),
                 'alamat'     => $faker->streetAddress,
-                'rt'         => $faker->numerify('#'),
-                'rw'         => $faker->numerify('#'),
+                'rt'         => str_pad($faker->numberBetween(1, 9), 1, '0', STR_PAD_LEFT),
+                'rw'         => str_pad($faker->numberBetween(1, 9), 1, '0', STR_PAD_LEFT),
                 'kapasitas'  => $faker->numberBetween(20, 200),
-                'deskripsi'  => $faker->sentence(10),
-                'foto'       => 'default.jpg', // opsional, atau biarkan null
+                'deskripsi'  => $faker->paragraph(2), // deskripsi 2 paragraf bahasa Indonesia
+                'foto'       => 'default.jpg', // opsional
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

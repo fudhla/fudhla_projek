@@ -7,17 +7,16 @@
     <div class="container mx-auto px-6 mt-6 flex justify-end">
         <form action="{{ route('logout') }}" method="GET">
             @csrf
-            <button
-                type="submit"
-                class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow transition duration-200 flex items-center gap-2"
-            >
+            <button type="submit"
+                class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow transition duration-200 flex items-center gap-2">
                 <i class="bi bi-box-arrow-right text-lg"></i> Logout
             </button>
         </form>
     </div>
 
     <!-- HERO SECTION -->
-    <section class="hero relative h-[500px] flex items-center justify-center text-center text-white">
+    <section class="hero relative h-[500px] flex items-center justify-center text-center text-white"
+     style="background-image: url('{{ asset('assets/images/bg.jpg') }}'); background-size: cover; background-position: center;">
         <div class="hero-overlay absolute inset-0"></div>
         <div class="relative z-10 max-w-3xl">
             <h1 class="text-4xl md:text-5xl font-bold mb-4">
@@ -72,14 +71,10 @@
                     @foreach ($fasilitas as $item)
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl">
                             <div class="h-48 bg-gray-200 overflow-hidden">
-                                @if ($item->foto)
-                                    <img src="{{ asset('uploads/' . ltrim($item->foto, '/')) }}"
-                                        alt="Foto {{ $item->nama }}" class="w-full h-full object-cover">
-                                @else
-                                    <div class="w-full h-full flex items-center justify-center text-gray-500 bg-gray-100">
-                                        <span class="text-lg">Tidak ada Foto</span>
-                                    </div>
-                                @endif
+                                <img src="{{ $item->foto && file_exists(public_path('uploads/' . $item->foto))
+                                    ? asset('uploads/' . $item->foto)
+                                    : asset('assets/images/default.jpg') }}"
+                                    alt="Foto {{ $item->nama }}" class="w-full h-full object-cover">
                             </div>
 
                             <div class="p-5">
