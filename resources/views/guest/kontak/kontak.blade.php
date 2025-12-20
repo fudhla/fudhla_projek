@@ -88,7 +88,7 @@
 
                         {{-- FOTO PROFIL --}}
                         <div class="profile-photo-container mx-auto md:mx-0">
-                            <img src="{{ asset('assets/images/foto.png') }}"
+                            <img src="{{ asset('assets/images/profil.jpeg') }}"
                                 alt="Foto Pengembang"
                                 class="profile-img-split">
                         </div>

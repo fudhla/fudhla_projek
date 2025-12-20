@@ -4,16 +4,6 @@
     {{-- ===================================== --}}
     {{-- TOMBOL LOGOUT (POJOK KANAN ATAS) --}}
     {{-- ===================================== --}}
-    <div class="container mx-auto px-6 mt-6 flex justify-end">
-        <form action="{{ route('logout') }}" method="GET">
-            @csrf
-            <button type="submit"
-                class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow transition duration-200 flex items-center gap-2">
-                <i class="bi bi-box-arrow-right text-lg"></i> Logout
-            </button>
-        </form>
-    </div>
-
     <!-- HERO SECTION -->
     <section class="hero relative h-[500px] flex items-center justify-center text-center text-white"
      style="background-image: url('{{ asset('assets/images/bg.jpg') }}'); background-size: cover; background-position: center;">
