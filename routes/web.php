@@ -1,12 +1,15 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FasilitasUmumController;
-use App\Http\Controllers\PeminjamanFasilitasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WargaController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FasilitasUmumController;
+use App\Http\Controllers\SyaratFasilitasController;
+use App\Http\Controllers\PetugasFasilitasController;
+use App\Http\Controllers\PembayaranFasilitasController;
+use App\Http\Controllers\PeminjamanFasilitasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,4 +71,10 @@ Route::delete('media/{media}', [MediaController::class, 'destroy'])->name('media
 
 //kontek
 Route::get('/kontak', function () { return view('guest.kontak.kontak');})->name('kontak');
+
+Route::resource('pembayaran', PembayaranFasilitasController::class);
+
+Route::resource('syarat', SyaratFasilitasController::class);
+
+Route::resource('petugas', PetugasFasilitasController::class);
 

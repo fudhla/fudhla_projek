@@ -95,8 +95,8 @@
 
                         {{-- DETAIL IDENTITAS --}}
                         <h4 class="text-xl font-bold mb-1 contact-title-dark">Fudhla Aulia</h4>
-                        <p class="text-gray-600 mb-1">NIM: **2457301059**</p>
-                        <p class="text-gray-500 text-sm mb-6">Kelas: **2 SI D**</p>
+                        <p class="text-gray-600 mb-1">NIM: 2457301059</p>
+                        <p class="text-gray-500 text-sm mb-6">Kelas: 2 SI D</p>
 
                         {{-- INFORMASI KONTAK --}}
                         <div class="border-t pt-4 mt-4">

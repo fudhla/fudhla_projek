@@ -10,7 +10,7 @@ class FasilitasUmumController extends Controller
 {
     public function index()
     {
-        // Variabel 'fasilitas' sudah benar
+        
         $fasilitas = FasilitasUmum::latest()->paginate(10);
         return view('guest.index', compact('fasilitas'));
     }

@@ -8,10 +8,10 @@ class FasilitasUmum extends Model
 {
     use HasFactory;
 
-    protected $table      = 'fasilitas_umum';
-    protected $primaryKey = 'fasilitas_id'; // sudah benar
-    public $incrementing  = true;           // tambahkan ini kalau auto-increment
-    protected $keyType    = 'int';          // tipe primary key integer
+    protected $table = 'fasilitas_umum';
+    protected $primaryKey = 'fasilitas_id';
+    public $incrementing = true;
+    protected $keyType = 'int';
 
     protected $fillable = [
         'nama',
@@ -23,6 +23,7 @@ class FasilitasUmum extends Model
         'deskripsi',
         'foto',
     ];
+
     public function getRouteKeyName()
     {
         return 'fasilitas_id';
@@ -33,4 +34,13 @@ class FasilitasUmum extends Model
         return $this->hasMany(PeminjamanFasilitas::class, 'fasilitas_id');
     }
 
+    public function syarat()
+    {
+        return $this->hasMany(SyaratFasilitas::class, 'fasilitas_id');
+    }
+
+    public function petugas()
+    {
+        return $this->hasMany(PetugasFasilitas::class, 'fasilitas_id');
+    }
 }

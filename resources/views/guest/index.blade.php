@@ -63,7 +63,7 @@
                             <div class="h-48 bg-gray-200 overflow-hidden">
                                 <img src="{{ $item->foto && file_exists(public_path('uploads/' . $item->foto))
                                     ? asset('uploads/' . $item->foto)
-                                    : asset('assets/images/default.jpg') }}"
+                                    : asset('assets/images/dfl.webp') }}"
                                     alt="Foto {{ $item->nama }}" class="w-full h-full object-cover">
                             </div>
 

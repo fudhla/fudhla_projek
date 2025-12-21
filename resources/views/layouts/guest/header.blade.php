@@ -26,6 +26,7 @@
         </a>
 
         {{-- 2. Dropdown Fasilitas (Fasilitas + Peminjaman) --}}
+        {{-- 2. Dropdown Fasilitas --}}
         <div class="relative group">
             <button
                 class="flex items-center px-4 py-2 rounded-lg hover:bg-white/10 transition duration-200 font-medium">
@@ -39,14 +40,36 @@
                     <path d="M5.5 7l4.5 4.5L14.5 7" />
                 </svg>
             </button>
+
             <div
-                class="absolute hidden group-hover:block bg-white text-gray-800 rounded-xl shadow-2xl mt-1 w-48 overflow-hidden border border-gray-100 z-50">
-                <a href="{{ route('fasilitas.index') }}" class="block px-4 py-3 hover:bg-blue-50 transition">Data
-                    Fasilitas</a>
+                class="absolute hidden group-hover:block bg-white text-gray-800 rounded-xl shadow-2xl mt-1 w-56 overflow-hidden border border-gray-100 z-50">
+
+                <a href="{{ route('fasilitas.index') }}" class="block px-4 py-3 hover:bg-blue-50 transition">
+                    Data Fasilitas
+                </a>
+
                 <a href="{{ route('pinjam.index') }}"
-                    class="block px-4 py-3 hover:bg-blue-50 transition border-t border-gray-50">Peminjaman</a>
+                    class="block px-4 py-3 hover:bg-blue-50 transition border-t border-gray-50">
+                    Peminjaman
+                </a>
+
+                <a href="{{ route('syarat.index') }}"
+                    class="block px-4 py-3 hover:bg-blue-50 transition border-t border-gray-50">
+                    Syarat Fasilitas
+                </a>
+
+                <a href="{{ route('pembayaran.index') }}"
+                    class="block px-4 py-3 hover:bg-blue-50 transition border-t border-gray-50">
+                    Pembayaran
+                </a>
+
+                <a href="{{ route('petugas.index') }}"
+                    class="block px-4 py-3 hover:bg-blue-50 transition border-t border-gray-50">
+                    Petugas
+                </a>
             </div>
         </div>
+
 
         {{-- 3. Warga (Link Tunggal) --}}
         <a href="{{ route('warga.index') }}"

@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class PembayaranFasilitas extends Model
+{
+    protected $table = 'pembayaran_fasilitas';
+    protected $primaryKey = 'bayar_id';
+
+    protected $fillable = [
+        'pinjam_id',
+        'tanggal',
+        'jumlah',
+        'metode',
+        'keterangan'
+    ];
+}
