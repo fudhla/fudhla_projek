@@ -1,17 +1,17 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\Media;
 use App\Models\PeminjamanFasilitas;
 use App\Models\Warga;
-use App\Models\Media;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PeminjamanFasilitasController extends Controller
 {
     public function index(Request $request)
     {
-        $peminjamans = PeminjamanFasilitas::with('warga')
+        $peminjamans = PeminjamanFasilitas::with(['warga', 'media'])
             ->when($request->search, function ($q) use ($request) {
                 $q->whereHas('warga', function ($w) use ($request) {
                     $w->where('nama', 'like', '%' . $request->search . '%')
@@ -36,39 +36,46 @@ class PeminjamanFasilitasController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'fasilitas_id' => 'required|string',
-            'warga_id' => 'required',
-            'tanggal_mulai' => 'required|date',
+            'fasilitas'       => 'required',
+            'warga_id'        => 'required',
+            'tanggal_mulai'   => 'required|date',
             'tanggal_selesai' => 'required|date',
-            'tujuan' => 'required',
-            'total_biaya' => 'required|numeric',
-            'bukti_bayar' => 'nullable|mimes:jpg,png,pdf|max:2048',
+            'tujuan'          => 'required',
+            'total_biaya'     => 'required|numeric',
+            'bukti_bayar'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $data = $request->except('bukti_bayar');
-        $data['status'] = 'Pending';
+        // simpan peminjaman
+        $pinjam = PeminjamanFasilitas::create([
+            'fasilitas'       => $request->fasilitas,
+            'warga_id'        => $request->warga_id,
+            'tanggal_mulai'   => $request->tanggal_mulai,
+            'tanggal_selesai' => $request->tanggal_selesai,
+            'tujuan'          => $request->tujuan,
+            'total_biaya'     => $request->total_biaya,
+            'status'          => 'Pending',
+        ]);
 
-        $peminjaman = PeminjamanFasilitas::create($data);
-
-        // Simpan file ke tabel media
+        // 🔥 SIMPAN BUKTI BAYAR
         if ($request->hasFile('bukti_bayar')) {
-            $path = $request->file('bukti_bayar')->store('bukti_bayar', 'public');
+            $file = $request->file('bukti_bayar');
+            $path = $file->store('bukti_bayar', 'public');
 
             Media::create([
                 'ref_table' => 'peminjaman_fasilitas',
-                'ref_id' => $peminjaman->pinjam_id,
-                'file_url' => $path,
-                'caption' => 'Bukti Pembayaran',
-                'mime_type' => $request->file('bukti_bayar')->getMimeType(),
+                'ref_id'    => $pinjam->pinjam_id,
+                'file_url'  => $path,
+                'mime_type' => $file->getMimeType(),
             ]);
         }
 
-        return redirect()->route('pinjam.index')->with('success', 'Data berhasil ditambah');
+        return redirect()->route('pinjam.index')
+            ->with('success', 'Peminjaman berhasil disimpan');
     }
 
     public function edit($id)
     {
-        $data = PeminjamanFasilitas::findOrFail($id);
+        $data  = PeminjamanFasilitas::findOrFail($id);
         $warga = Warga::all();
 
         return view('guest.peminjaman.edit', compact('data', 'warga'));
@@ -76,34 +83,55 @@ class PeminjamanFasilitasController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = PeminjamanFasilitas::findOrFail($id);
-
         $request->validate([
-            'fasilitas_id' => 'required|string',
-            'warga_id' => 'required',
-            'tanggal_mulai' => 'required|date',
+            'fasilitas'       => 'required',
+            'warga_id'        => 'required',
+            'tanggal_mulai'   => 'required|date',
             'tanggal_selesai' => 'required|date',
-            'tujuan' => 'required',
-            'total_biaya' => 'required|numeric',
-            'bukti_bayar' => 'nullable|mimes:jpg,png,pdf|max:2048',
+            'tujuan'          => 'required',
+            'total_biaya'     => 'required|numeric',
+            'bukti_bayar'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $data->update($request->except('bukti_bayar'));
+        $pinjam = PeminjamanFasilitas::findOrFail($id);
 
-        // Update media jika upload baru
+        // update data utama
+        $pinjam->update([
+            'fasilitas'       => $request->fasilitas,
+            'warga_id'        => $request->warga_id,
+            'tanggal_mulai'   => $request->tanggal_mulai,
+            'tanggal_selesai' => $request->tanggal_selesai,
+            'tujuan'          => $request->tujuan,
+            'total_biaya'     => $request->total_biaya,
+        ]);
+
+        // 🔥 JIKA ADA FILE BARU
         if ($request->hasFile('bukti_bayar')) {
-            $path = $request->file('bukti_bayar')->store('bukti_bayar', 'public');
+
+            // hapus media lama
+            $oldMedia = Media::where('ref_table', 'peminjaman_fasilitas')
+                ->where('ref_id', $pinjam->pinjam_id)
+                ->get();
+
+            foreach ($oldMedia as $media) {
+                Storage::disk('public')->delete($media->file_url);
+                $media->delete();
+            }
+
+            // simpan media baru
+            $file = $request->file('bukti_bayar');
+            $path = $file->store('bukti_bayar', 'public');
 
             Media::create([
                 'ref_table' => 'peminjaman_fasilitas',
-                'ref_id' => $data->pinjam_id,
-                'file_url' => $path,
-                'caption' => 'Bukti Pembayaran (Update)',
-                'mime_type' => $request->file('bukti_bayar')->getMimeType(),
+                'ref_id'    => $pinjam->pinjam_id,
+                'file_url'  => $path,
+                'mime_type' => $file->getMimeType(),
             ]);
         }
 
-        return redirect()->route('pinjam.index')->with('success', 'Data berhasil diupdate');
+        return redirect()->route('pinjam.index')
+            ->with('success', 'Peminjaman berhasil diperbarui');
     }
 
     public function destroy($id)

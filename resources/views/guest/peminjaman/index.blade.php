@@ -31,7 +31,12 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($peminjamans as $item)
                 <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+                    @php
+                        $foto = $item->media->first();
+                    @endphp
 
+                    <img src="{{ $foto ? asset('storage/' . $foto->file_url) : asset('assets/images/default.jpg') }}"
+                        class="w-full h-40 object-cover rounded-lg mb-4 border" alt="Bukti Pembayaran">
                     {{-- Fasilitas --}}
                     <p class="text-gray-700 text-sm mb-2">
                         <span class="font-semibold">Fasilitas:</span>

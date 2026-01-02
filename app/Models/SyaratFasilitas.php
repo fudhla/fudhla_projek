@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 
 class SyaratFasilitas extends Model
@@ -14,5 +15,10 @@ class SyaratFasilitas extends Model
         'nama_syarat',
         'deskripsi'
     ];
+     public function Media()
+    {
+        return $this->hasMany(Media::class, 'ref_id', 'syarat_id')
+            ->where('ref_table', 'syarat_fasilitas');
+    }
 }
 
