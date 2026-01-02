@@ -62,10 +62,12 @@ class WargaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        return view('warga.edit', compact('warga'));
-    }
+    public function edit($id)
+{
+    $warga = Warga::find($id); // ambil data warga berdasarkan id
+    return view('guest.warga.edit', compact('warga'));
+}
+
 
     /**
      * Update the specified resource in storage.

@@ -41,7 +41,8 @@ Route::middleware(['checkislogin'])->group(function () {
 Route::controller(AuthController::class)->group(function () {
     Route::get('/auth', 'index')->name('login.form');           // GET Login page
     Route::post('/auth/login', 'login')->name('login.process'); // POST Login
-    Route::get('/logout', 'logout')->name('logout');            // GET Logout
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+           // GET Logout
 });
 
 /*
