@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,28 +9,31 @@ class PeminjamanFasilitas extends Model
 {
     use HasFactory;
 
-    protected $table = 'peminjaman_fasilitas';
-    protected $primaryKey = 'pinjam_id';
+    protected $primaryKey = 'pinjam_id'; // pastikan sesuai DB
 
     protected $fillable = [
-        'fasilitas',
+        'fasilitas_id',
         'warga_id',
         'tanggal_mulai',
         'tanggal_selesai',
         'tujuan',
-        'status',
         'total_biaya',
+        'status',
     ];
 
-    public function warga()
-    {
-        return $this->belongsTo(Warga::class, 'warga_id');
+    // RELASI KE WARGA
+    public function warga() {
+        return $this->belongsTo(Warga::class, 'warga_id', 'id');
     }
 
-    public function media()
-    {
+    // RELASI KE MEDIA
+    public function media() {
         return $this->hasMany(Media::class, 'ref_id', 'pinjam_id')
-            ->where('ref_table', 'peminjaman_fasilitas')
-            ->orderBy('sort_order');
+                    ->where('ref_table', 'peminjaman_fasilitas');
+    }
+
+    // RELASI KE FASILITAS UMUM
+    public function fasilitas() {
+        return $this->belongsTo(FasilitasUmum::class, 'fasilitas_id', 'fasilitas_id');
     }
 }
