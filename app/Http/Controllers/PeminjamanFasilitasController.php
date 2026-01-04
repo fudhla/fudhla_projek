@@ -40,31 +40,30 @@ class PeminjamanFasilitasController extends Controller
     {
         $request->validate([
             'fasilitas_id'    => 'required|exists:fasilitas_umum,fasilitas_id',
-            'warga_id'        => 'required',
+            'warga_id'        => 'required|exists:wargas,id',
             'tanggal_mulai'   => 'required|date',
-            'tanggal_selesai' => 'required|date',
-            'tujuan'          => 'required',
+            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'tujuan'          => 'required|string|max:255',
             'total_biaya'     => 'required|numeric',
             'bukti_bayar'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $pinjam = PeminjamanFasilitas::create([
-            'fasilitas_id'    => $request->fasilitas_id,
-            'warga_id'        => $request->warga_id,
-            'tanggal_mulai'   => $request->tanggal_mulai,
-            'tanggal_selesai' => $request->tanggal_selesai,
-            'tujuan'          => $request->tujuan,
-            'total_biaya'     => $request->total_biaya,
-            'status'          => 'Pending',
-        ]);
+        // Buat peminjaman
+        $pinjam = PeminjamanFasilitas::create($request->only([
+            'fasilitas_id',
+            'warga_id',
+            'tanggal_mulai',
+            'tanggal_selesai',
+            'tujuan',
+            'total_biaya',
+        ]));
 
+        // Simpan bukti bayar jika ada
         if ($request->hasFile('bukti_bayar')) {
             $file = $request->file('bukti_bayar');
             $path = $file->store('bukti_bayar', 'public');
 
-            Media::create([
-                'ref_table' => 'peminjaman_fasilitas',
-                'ref_id'    => $pinjam->pinjam_id,
+            $pinjam->media()->create([
                 'file_url'  => $path,
                 'mime_type' => $file->getMimeType(),
             ]);
@@ -77,41 +76,37 @@ class PeminjamanFasilitasController extends Controller
     {
         $request->validate([
             'fasilitas_id'    => 'required|exists:fasilitas_umum,fasilitas_id',
-            'warga_id'        => 'required',
+            'warga_id'        => 'required|exists:wargas,id',
             'tanggal_mulai'   => 'required|date',
-            'tanggal_selesai' => 'required|date',
-            'tujuan'          => 'required',
+            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'tujuan'          => 'required|string|max:255',
             'total_biaya'     => 'required|numeric',
             'bukti_bayar'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $pinjam = PeminjamanFasilitas::findOrFail($id);
 
-        $pinjam->update([
-            'fasilitas_id'    => $request->fasilitas_id,
-            'warga_id'        => $request->warga_id,
-            'tanggal_mulai'   => $request->tanggal_mulai,
-            'tanggal_selesai' => $request->tanggal_selesai,
-            'tujuan'          => $request->tujuan,
-            'total_biaya'     => $request->total_biaya,
-        ]);
+        // Update data peminjaman
+        $pinjam->update($request->only([
+            'fasilitas_id',
+            'warga_id',
+            'tanggal_mulai',
+            'tanggal_selesai',
+            'tujuan',
+            'total_biaya',
+        ]));
 
+        // Hapus bukti bayar lama jika ada, dan simpan yang baru
         if ($request->hasFile('bukti_bayar')) {
-            $oldMedia = Media::where('ref_table', 'peminjaman_fasilitas')
-                ->where('ref_id', $pinjam->pinjam_id)
-                ->get();
-
-            foreach ($oldMedia as $media) {
+            $pinjam->media()->each(function ($media) {
                 Storage::disk('public')->delete($media->file_url);
                 $media->delete();
-            }
+            });
 
             $file = $request->file('bukti_bayar');
             $path = $file->store('bukti_bayar', 'public');
 
-            Media::create([
-                'ref_table' => 'peminjaman_fasilitas',
-                'ref_id'    => $pinjam->pinjam_id,
+            $pinjam->media()->create([
                 'file_url'  => $path,
                 'mime_type' => $file->getMimeType(),
             ]);
@@ -119,6 +114,7 @@ class PeminjamanFasilitasController extends Controller
 
         return redirect()->route('pinjam.index')->with('success', 'Peminjaman berhasil diperbarui');
     }
+
     public function edit($id)
     {
         $pinjam    = PeminjamanFasilitas::with(['warga', 'fasilitas', 'media'])->findOrFail($id);
