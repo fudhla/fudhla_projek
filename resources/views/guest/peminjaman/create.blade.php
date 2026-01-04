@@ -8,7 +8,7 @@
                 @if ($errors->any())
                     <div class="mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
                         <ul class="list-disc ml-5">
-                            @foreach ($errors->all() as $error)
+                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
@@ -25,9 +25,16 @@
                     {{-- Fasilitas --}}
                     <div class="mb-5">
                         <label class="block font-semibold text-gray-700 mb-2">Nama Fasilitas</label>
-                        <input type="text" name="fasilitas" value="{{ old('fasilitas') }}"
+                        <select name="fasilitas_id"
                             class="w-full border border-gray-300 rounded-lg p-3 bg-white focus:ring-2 focus:ring-blue-500 outline-none"
                             required>
+                            <option value="">-- Pilih Fasilitas --</option>
+                            @foreach ($fasilitas as $f)
+                                <option value="{{ $f->fasilitas_id }}" {{ old('fasilitas_id') == $f->fasilitas_id ? 'selected' : '' }}>
+                                    {{ $f->nama }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
 
                     {{-- Warga --}}
@@ -38,7 +45,9 @@
                             required>
                             <option value="">-- Pilih Warga --</option>
                             @foreach ($warga as $item)
-                                <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                <option value="{{ $item->id }}" {{ old('warga_id') == $item->id ? 'selected' : '' }}>
+                                    {{ $item->nama }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -47,14 +56,14 @@
                     <div class="flex gap-4 mb-5">
                         <div class="w-1/2">
                             <label class="block font-semibold text-gray-700 mb-2">Tanggal Mulai</label>
-                            <input type="date" name="tanggal_mulai"
+                            <input type="date" name="tanggal_mulai" value="{{ old('tanggal_mulai') }}"
                                 class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none"
                                 required>
                         </div>
 
                         <div class="w-1/2">
                             <label class="block font-semibold text-gray-700 mb-2">Tanggal Selesai</label>
-                            <input type="date" name="tanggal_selesai"
+                            <input type="date" name="tanggal_selesai" value="{{ old('tanggal_selesai') }}"
                                 class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none"
                                 required>
                         </div>
@@ -71,7 +80,7 @@
                     {{-- Total Biaya --}}
                     <div class="mb-5">
                         <label class="block font-semibold text-gray-700 mb-2">Total Biaya</label>
-                        <input type="number" name="total_biaya"
+                        <input type="number" name="total_biaya" value="{{ old('total_biaya') }}"
                             class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none"
                             placeholder="Contoh: 150000" required>
                     </div>

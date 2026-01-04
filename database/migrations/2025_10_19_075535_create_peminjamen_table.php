@@ -17,8 +17,8 @@ return new class extends Migration
             // relasi warga
             $table->unsignedBigInteger('warga_id');
 
-            // fasilitas yang dipinjam
-            $table->string('fasilitas');
+            // relasi fasilitas
+            $table->unsignedBigInteger('fasilitas_id');
 
             // tanggal
             $table->date('tanggal_mulai');
@@ -40,7 +40,13 @@ return new class extends Migration
                 ->references('id')
                 ->on('wargas')
                 ->onDelete('cascade');
+
+            $table->foreign('fasilitas_id')
+                ->references('fasilitas_id')
+                ->on('fasilitas_umum')
+                ->onDelete('cascade');
         });
+
     }
 
     /**
