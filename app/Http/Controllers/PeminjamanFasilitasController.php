@@ -1,11 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\FasilitasUmum;
 use App\Models\Media;
 use App\Models\PeminjamanFasilitas;
 use App\Models\Warga;
-use App\Models\FasilitasUmum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,7 +16,7 @@ class PeminjamanFasilitasController extends Controller
             ->when($request->search, function ($q) use ($request) {
                 $q->whereHas('warga', function ($w) use ($request) {
                     $w->where('nama', 'like', '%' . $request->search . '%')
-                      ->orWhere('nik', 'like', '%' . $request->search . '%');
+                        ->orWhere('nik', 'like', '%' . $request->search . '%');
                 });
             })
             ->when($request->status, function ($q) use ($request) {
@@ -31,7 +30,7 @@ class PeminjamanFasilitasController extends Controller
 
     public function create()
     {
-        $warga = Warga::all();
+        $warga     = Warga::all();
         $fasilitas = FasilitasUmum::all();
 
         return view('guest.peminjaman.create', compact('warga', 'fasilitas'));
@@ -119,6 +118,14 @@ class PeminjamanFasilitasController extends Controller
         }
 
         return redirect()->route('pinjam.index')->with('success', 'Peminjaman berhasil diperbarui');
+    }
+    public function edit($id)
+    {
+        $pinjam    = PeminjamanFasilitas::with(['warga', 'fasilitas', 'media'])->findOrFail($id);
+        $warga     = Warga::all();
+        $fasilitas = FasilitasUmum::all();
+
+        return view('guest.peminjaman.edit', compact('pinjam', 'warga', 'fasilitas'));
     }
 
     public function show($id)
