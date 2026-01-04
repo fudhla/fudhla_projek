@@ -1,9 +1,11 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Media;
 use App\Models\PeminjamanFasilitas;
 use App\Models\Warga;
+use App\Models\FasilitasUmum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -11,11 +13,11 @@ class PeminjamanFasilitasController extends Controller
 {
     public function index(Request $request)
     {
-        $peminjamans = PeminjamanFasilitas::with(['warga', 'media'])
+        $peminjamans = PeminjamanFasilitas::with(['warga', 'media', 'fasilitas'])
             ->when($request->search, function ($q) use ($request) {
                 $q->whereHas('warga', function ($w) use ($request) {
                     $w->where('nama', 'like', '%' . $request->search . '%')
-                        ->orWhere('nik', 'like', '%' . $request->search . '%');
+                      ->orWhere('nik', 'like', '%' . $request->search . '%');
                 });
             })
             ->when($request->status, function ($q) use ($request) {
@@ -30,13 +32,15 @@ class PeminjamanFasilitasController extends Controller
     public function create()
     {
         $warga = Warga::all();
-        return view('guest.peminjaman.create', compact('warga'));
+        $fasilitas = FasilitasUmum::all();
+
+        return view('guest.peminjaman.create', compact('warga', 'fasilitas'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'fasilitas'       => 'required',
+            'fasilitas_id'    => 'required|exists:fasilitas_umum,fasilitas_id',
             'warga_id'        => 'required',
             'tanggal_mulai'   => 'required|date',
             'tanggal_selesai' => 'required|date',
@@ -45,9 +49,8 @@ class PeminjamanFasilitasController extends Controller
             'bukti_bayar'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // simpan peminjaman
         $pinjam = PeminjamanFasilitas::create([
-            'fasilitas'       => $request->fasilitas,
+            'fasilitas_id'    => $request->fasilitas_id,
             'warga_id'        => $request->warga_id,
             'tanggal_mulai'   => $request->tanggal_mulai,
             'tanggal_selesai' => $request->tanggal_selesai,
@@ -56,7 +59,6 @@ class PeminjamanFasilitasController extends Controller
             'status'          => 'Pending',
         ]);
 
-        // 🔥 SIMPAN BUKTI BAYAR
         if ($request->hasFile('bukti_bayar')) {
             $file = $request->file('bukti_bayar');
             $path = $file->store('bukti_bayar', 'public');
@@ -69,22 +71,13 @@ class PeminjamanFasilitasController extends Controller
             ]);
         }
 
-        return redirect()->route('pinjam.index')
-            ->with('success', 'Peminjaman berhasil disimpan');
-    }
-
-    public function edit($id)
-    {
-        $data  = PeminjamanFasilitas::findOrFail($id);
-        $warga = Warga::all();
-
-        return view('guest.peminjaman.edit', compact('data', 'warga'));
+        return redirect()->route('pinjam.index')->with('success', 'Peminjaman berhasil disimpan');
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'fasilitas'       => 'required',
+            'fasilitas_id'    => 'required|exists:fasilitas_umum,fasilitas_id',
             'warga_id'        => 'required',
             'tanggal_mulai'   => 'required|date',
             'tanggal_selesai' => 'required|date',
@@ -95,9 +88,8 @@ class PeminjamanFasilitasController extends Controller
 
         $pinjam = PeminjamanFasilitas::findOrFail($id);
 
-        // update data utama
         $pinjam->update([
-            'fasilitas'       => $request->fasilitas,
+            'fasilitas_id'    => $request->fasilitas_id,
             'warga_id'        => $request->warga_id,
             'tanggal_mulai'   => $request->tanggal_mulai,
             'tanggal_selesai' => $request->tanggal_selesai,
@@ -105,10 +97,7 @@ class PeminjamanFasilitasController extends Controller
             'total_biaya'     => $request->total_biaya,
         ]);
 
-        // 🔥 JIKA ADA FILE BARU
         if ($request->hasFile('bukti_bayar')) {
-
-            // hapus media lama
             $oldMedia = Media::where('ref_table', 'peminjaman_fasilitas')
                 ->where('ref_id', $pinjam->pinjam_id)
                 ->get();
@@ -118,7 +107,6 @@ class PeminjamanFasilitasController extends Controller
                 $media->delete();
             }
 
-            // simpan media baru
             $file = $request->file('bukti_bayar');
             $path = $file->store('bukti_bayar', 'public');
 
@@ -130,21 +118,18 @@ class PeminjamanFasilitasController extends Controller
             ]);
         }
 
-        return redirect()->route('pinjam.index')
-            ->with('success', 'Peminjaman berhasil diperbarui');
-    }
-
-    public function destroy($id)
-    {
-        $data = PeminjamanFasilitas::findOrFail($id);
-        $data->delete();
-
-        return redirect()->route('pinjam.index')->with('success', 'Data berhasil dihapus');
+        return redirect()->route('pinjam.index')->with('success', 'Peminjaman berhasil diperbarui');
     }
 
     public function show($id)
     {
-        $data = PeminjamanFasilitas::with('media', 'warga')->findOrFail($id);
+        $data = PeminjamanFasilitas::with(['media', 'warga', 'fasilitas'])->findOrFail($id);
         return view('guest.peminjaman.detail', compact('data'));
+    }
+
+    public function destroy($id)
+    {
+        PeminjamanFasilitas::findOrFail($id)->delete();
+        return redirect()->route('pinjam.index')->with('success', 'Data berhasil dihapus');
     }
 }

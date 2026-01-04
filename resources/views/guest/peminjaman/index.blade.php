@@ -36,7 +36,13 @@
                     @endphp
 
                     <img src="{{ $foto ? asset('storage/' . $foto->file_url) : asset('assets/images/default.jpg') }}"
-                        class="w-full h-40 object-cover rounded-lg mb-4 border" alt="Bukti Pembayaran">
+                        class="w-full h-40 object-cover rounded-lg mb-4 border">
+
+                    <p class="text-gray-700 text-sm mb-2">
+                        <span class="font-semibold">Fasilitas:</span>
+                        {{ $item->fasilitas->nama ?? '-' }}
+                    </p>
+
                     {{-- Fasilitas --}}
                     <p class="text-gray-700 text-sm mb-2">
                         <span class="font-semibold">Fasilitas:</span>
