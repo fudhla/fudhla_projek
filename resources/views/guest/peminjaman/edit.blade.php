@@ -16,10 +16,22 @@
                     {{-- Fasilitas --}}
                     <div class="mb-5">
                         <label class="block font-semibold text-gray-700 mb-2">Nama Fasilitas</label>
-                        <input type="text" name="fasilitas" value="{{ old('fasilitas', $data->fasilitas) }}"
+                        <select name="fasilitas_id"
                             class="w-full border border-gray-300 rounded-lg p-3 bg-white focus:ring-2 focus:ring-blue-500 outline-none"
                             required>
+                            <option value="">-- Pilih Fasilitas --</option>
+                            @foreach ($fasilitas as $f)
+                                <option value="{{ $f->fasilitas_id }}"
+                                    {{ $data->fasilitas_id == $f->fasilitas_id ? 'selected' : '' }}>
+                                    {{ $f->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('fasilitas_id')
+                            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
+
 
                     {{-- Warga --}}
                     <div class="mb-5">
