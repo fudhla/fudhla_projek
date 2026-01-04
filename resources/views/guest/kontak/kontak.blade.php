@@ -88,7 +88,7 @@
 
                         {{-- FOTO PROFIL --}}
                         <div class="profile-photo-container mx-auto md:mx-0">
-                            <img src="{{ asset('assets/images/profil.jpeg') }}"
+                            <img src="{{ asset('assets/images/KTM.jpeg') }}"
                                 alt="Foto Pengembang"
                                 class="profile-img-split">
                         </div>
@@ -118,7 +118,7 @@
                                     <i class="fas fa-phone fa-lg contact-icon mr-3 text-pcr-blue mt-1" style="width: 20px;"></i>
                                     <div>
                                         <small class="text-gray-500 text-xs font-semibold block">Telepon</small>
-                                        <span class="text-sm text-gray-800 font-medium">+62 819 5633 5472</span>
+                                        <span class="text-sm text-gray-800 font-medium">+62 895 6234 47200</span>
                                     </div>
                                 </div>
 
@@ -148,15 +148,15 @@
                         <div class="flex gap-4 social-icons-list justify-center md:justify-start mb-8">
 
                             {{-- LinkedIn --}}
-                            <a href="https://www.linkedin.com/in/username" target="_blank" class="social-circle" title="LinkedIn">
+                            <a href="https://www.linkedin.com/in/fudhla-aulia-7a2812374/" target="_blank" class="social-circle" title="LinkedIn">
                                 <i class="fab fa-linkedin-in fa-lg"></i>
                             </a>
                             {{-- GitHub --}}
-                            <a href="https://github.com/username" target="_blank" class="social-circle" title="GitHub">
+                            <a href="https://github.com/fudhla" target="_blank" class="social-circle" title="GitHub">
                                 <i class="fab fa-github fa-lg"></i>
                             </a>
                             {{-- Instagram --}}
-                            <a href="https://instagram.com/username" target="_blank" class="social-circle" title="Instagram">
+                            <a href="https://instagram.com/fdhlaaulia" target="_blank" class="social-circle" title="Instagram">
                                 <i class="fab fa-instagram fa-lg"></i>
                             </a>
                             {{-- Facebook --}}
