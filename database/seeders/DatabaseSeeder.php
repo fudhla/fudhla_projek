@@ -23,8 +23,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // $this->call([
+        //     WargaSeeder::class,
         //     AllSeeder::class,
         //     UserSeeder::class,
+        //     Peminjaman::class,
         // ]);
 
     }

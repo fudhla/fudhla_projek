@@ -43,7 +43,6 @@ class AllSeeder extends Seeder
                 'tanggal_selesai' => $tanggalSelesai->format('Y-m-d'),
                 'tujuan'          => $faker->sentence(4),
                 'total_biaya'     => $faker->numberBetween(0, 500000),
-                'bukti_bayar'     => null,
                 'status'          => $faker->randomElement(['pending', 'disetujui', 'ditolak']),
                 'created_at'      => now(),
                 'updated_at'      => now(),
