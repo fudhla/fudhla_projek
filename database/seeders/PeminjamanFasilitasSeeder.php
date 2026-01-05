@@ -26,7 +26,7 @@ class PeminjamanFasilitasSeeder extends Seeder
 
             DB::table('peminjaman_fasilitas')->insert([
                 // SESUAIKAN DENGAN MIGRATION ANDA:
-                'fasilitas'       => $faker->randomElement($fasilitasNama), // Simpan nama, bukan ID
+                'fasilitas_id'       => $faker->randomElement($fasilitasNama), // Simpan nama, bukan ID
                 'warga_id'        => $faker->randomElement($wargaIds),
 
                 'tanggal_mulai'   => $tanggalMulai->format('Y-m-d'),
